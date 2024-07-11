@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=64.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "semantic_search"
+version = "0.0.1"
+dependencies = [
+    "Flask",
+    "requests",
+]
+requires-python = ">=3.10"
+
+[tool.pylint."messages control"]
+disable = ["cyclic-import"]
