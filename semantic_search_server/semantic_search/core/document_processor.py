@@ -3,24 +3,22 @@ import semantic_search
 import threading
 from annoy import AnnoyIndex
 from semantic_search.core import embed
-from semantic_search.utils import chunk
+from semantic_search.core import parse_file
 
 def process_document_async(basename):
 
     def long_running_task():
         try:
-            # make utils function for this
-            with open(semantic_search.model.CORPUS[basename]['path'], 'rb') as file:
-                text = file.read().decode('latin-1')
-            
-            windowed_sentences = chunk(text)
 
-            if not windowed_sentences:
+            chunks = parse_file(semantic_search.model.CORPUS[basename]['path'])
+
+            if not chunks:
                 raise ValueError("Input sentences are empty")
-
+            
+            # need to make an indexing core, should be annoy index and the idx -> chunk storage
             t = AnnoyIndex(semantic_search.config.EMBEDDING_SIZE, 'angular')
 
-            embeddings = embed(windowed_sentences)
+            embeddings = embed(chunks)
 
             for idx, embedding in enumerate(embeddings):
                 t.add_item(idx, embedding)
