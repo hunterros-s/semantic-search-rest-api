@@ -1,9 +1,9 @@
 import flask
 import semantic_search
 import threading
-from annoy import AnnoyIndex
-from semantic_search.core import embed
 from semantic_search.core import parse_file
+from semantic_search.core.index import Index
+import semantic_search.model
 
 def process_document_async(basename):
 
@@ -15,22 +15,14 @@ def process_document_async(basename):
             if not chunks:
                 raise ValueError("Input sentences are empty")
             
-            # need to make an indexing core, should be annoy index and the idx -> chunk storage
-            t = AnnoyIndex(semantic_search.config.EMBEDDING_SIZE, 'angular')
-
-            embeddings = embed(chunks)
-
-            for idx, embedding in enumerate(embeddings):
-                t.add_item(idx, embedding)
-            
-            t.build(100)
-
-            name = f"{semantic_search.model.CORPUS[basename]['contents_hash']}.ann"
-            path = semantic_search.config.ANNOY_FOLDER/name
-            t.save(str(path))
+            i = Index()
+            i.apply_chunks(chunks)
+            i.embed()
+            ann_path, convert_path = i.save(semantic_search.model.CORPUS[basename]['contents_hash'])
 
             semantic_search.model.CORPUS[basename]['status'] = "embedded"
-            semantic_search.model.CORPUS[basename]['ANNOY_path'] = str(path)
+            semantic_search.model.CORPUS[basename]['ANNOY_path'] = str(ann_path)
+            semantic_search.model.CORPUS[basename]['convert_path'] = str(convert_path)
             semantic_search.model.CORPUS.save_corpus()
         except Exception as e:
             semantic_search.model.CORPUS[basename]['status'] = "uploaded"
