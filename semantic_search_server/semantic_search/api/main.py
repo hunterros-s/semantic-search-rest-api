@@ -15,6 +15,7 @@ def services():
     context = {
         "upload": "/api/v1/upload/",
         "corpus": "/api/v1/corpus/",
+        "query": "/api/v1/query/",
         "url": "/api/v1/"
     }
     return flask.jsonify(**context)
