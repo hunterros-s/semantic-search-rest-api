@@ -1,3 +1,9 @@
+"""
+File Parsing for Semantic Search
+
+This module provides a function for parsing files and extracting meaningful chunks of text. It currently supports
+parsing text files (.txt) but can be extended to handle other file types.
+"""
 import flask
 import semantic_search
 from pathlib import Path

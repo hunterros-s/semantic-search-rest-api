@@ -1,4 +1,10 @@
-"""handles corpus modifications"""
+"""
+Handles Corpus
+
+This module defines the `CorpusManager` class for managing the document corpus. The `CorpusManager` is responsible for
+loading, saving, and modifying the corpus data stored in a JSON file. It includes methods to retrieve, set, and check
+for items in the corpus, as well as converting the corpus to a dictionary format.
+"""
 import flask
 import semantic_search
 import os

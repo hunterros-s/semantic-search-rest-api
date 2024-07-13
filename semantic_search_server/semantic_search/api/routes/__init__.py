@@ -1,3 +1,10 @@
+"""
+Semantic Search API Routes Initialization
+
+This module initializes and registers all the routes for the semantic search API. It imports specific route handlers
+for uploading files, managing the corpus, and querying the semantic search index, thereby making them available
+to the main Flask application.
+"""
 import flask
 import semantic_search
 

@@ -1,8 +1,29 @@
+"""
+Text Processing Utilities
+
+This module provides utility functions for processing text, specifically for splitting text into meaningful
+chunks. It uses NLTK's sentence tokenizer to break text into sentences and then groups these sentences
+into windows of three consecutive sentences.
+"""
 import nltk
 nltk.download('punkt')
 from nltk.tokenize import sent_tokenize
 
+
 def chunk(input):
+    """
+    Split Input Text into Chunks of Sentences
+
+    This function takes an input text string, tokenizes it into sentences, and groups the sentences
+    into windows of three consecutive sentences. If the input contains fewer than three sentences,
+    it handles each case accordingly.
+
+    Args:
+        input (str): The input text string to be split into chunks.
+
+    Returns:
+        list[str]: A list of text chunks, each containing up to three consecutive sentences.
+    """
     sentences = sent_tokenize(input)
     windowed_sentences = []
 

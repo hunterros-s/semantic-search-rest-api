@@ -1,4 +1,17 @@
-"""Upload related routes."""
+"""
+Upload Related Routes
+
+This module defines the routes related to uploading files to the semantic search application.
+It includes routes for rendering the upload form and handling the file upload process.
+
+Routes:
+- `/api/v1/upload/`: Handles both GET and POST requests for file uploads. 
+  - GET: Returns an HTML form for uploading files.
+  - POST: Handles the uploading of files, saving them to the server, and updating the corpus with their information.
+
+HTML:
+- `upload_html`: The HTML form template for file uploads.
+"""
 import flask
 import semantic_search
 import uuid
@@ -23,6 +36,21 @@ upload_html = """<html>
 
 @semantic_search.app.route('/api/v1/upload/', methods=['GET', 'POST'], strict_slashes=False)
 def upload():
+    """
+    Handle File Uploads
+
+    This route handles both GET and POST requests for file uploads.
+    - GET: Renders and returns an HTML form for uploading files.
+    - POST: Handles file uploads, saves the files to the server, computes their SHA-256 hash,
+            and updates the corpus with the file information.
+
+    Returns:
+        On GET: An HTML form for uploading files.
+        On POST: A JSON object containing information about the uploaded files.
+
+    Raises:
+        400: If no files are uploaded or an invalid request is made.
+    """
     if flask.request.method == "GET":
         return upload_html
     elif flask.request.method == "POST":
