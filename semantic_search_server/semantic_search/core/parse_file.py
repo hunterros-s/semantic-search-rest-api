@@ -8,7 +8,7 @@ import flask
 import semantic_search
 from pathlib import Path
 
-from semantic_search.parsers import process_txt
+from semantic_search.parsers import process_txt, process_pdf
 
 
 def parse_file(path):
@@ -31,5 +31,7 @@ def parse_file(path):
 
     if extension == ".txt":
         return process_txt(path)
+    elif extension == ".pdf":
+        return process_pdf(path)
     else:
         raise ValueError(f"invalid file type of '{extension}'")
