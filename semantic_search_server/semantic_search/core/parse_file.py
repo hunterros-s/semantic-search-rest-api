@@ -8,7 +8,8 @@ import flask
 import semantic_search
 from pathlib import Path
 
-from semantic_search.utils import chunk
+from semantic_search.parsers import process_txt
+
 
 def parse_file(path):
     """
@@ -29,12 +30,6 @@ def parse_file(path):
     extension = path.suffix
 
     if extension == ".txt":
-        with open(path, 'rb') as file:
-            text = file.read().decode('latin-1')
-        
-        # chunking will probably need to be done inside the function that reads the file. chunking will be different for different file types
-        chunks = chunk(text)
-
-        return chunks
+        return process_txt(path)
     else:
         raise ValueError(f"invalid file type of '{extension}'")

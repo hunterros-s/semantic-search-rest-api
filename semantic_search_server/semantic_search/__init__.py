@@ -14,3 +14,4 @@ import semantic_search.api
 import semantic_search.model
 import semantic_search.core
 import semantic_search.utils
+import semantic_search.parsers
